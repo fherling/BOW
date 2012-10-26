@@ -18,10 +18,7 @@
 	<target name="default" description="">
 		<echo>RUN BUILD SCRIPT</echo>
 		<echo>................</echo>
-<<<<<<< HEAD
 		<echo>................</echo>
-=======
->>>>>>> refs/remotes/bow/master
 	</target>
 
 
