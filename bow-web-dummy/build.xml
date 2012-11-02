@@ -1,0 +1,26 @@
+<project name="bow8" default="war">
+
+	<property environment="env" />
+	<property name="$CATALINA_HOME" value="${env.CATALINA_HOME}" />
+
+	<target name="init">
+		<delete dir="out" failonerror="false" />
+		<mkdir dir="out" />
+	</target>
+
+	<target name="war" depends="init">
+		<copy todir="out">
+			<fileset dir="src/main/webapp" />
+		</copy>
+		<war destfile="out/${ant.project.name}.war" webxml="out/WEB-INF/web.xml">
+			<fileset dir="out">
+				<exclude name="**/web.xml" />
+			</fileset>
+		</war>
+	</target>
+
+	<target name="deploy" depends="war">
+		<copy todir="${CATALINA_HOME}/webapps" file="out/${ant.project.name}.war" />
+	</target>
+	
+</project>
