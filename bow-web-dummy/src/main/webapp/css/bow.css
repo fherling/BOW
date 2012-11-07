@@ -32,3 +32,10 @@ input {
 	height: 480px;
 	width: 640px;
 }
+
+#output-div {
+	font-size: 12px;
+	margin: 20px;
+	padding: 20px;
+	border: 1px solid black;
+}
