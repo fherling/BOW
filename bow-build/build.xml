@@ -19,6 +19,7 @@
 		<echo>RUN BUILD SCRIPT</echo>
 		<echo>................</echo>
 		<echo>................</echo>
+		<antcall target="build-web-dummy" inheritall="false" inheritrefs="false"></antcall>
 	</target>
 
 
@@ -29,4 +30,8 @@
 	<target name="depends">
 	</target>
 
+	
+	<target name="build-web-dummy">
+		<ant antfile="../bow-web-dummy/build.xml" dir="../bow-web-dummy" target="war"/>
+	</target>
 </project>
