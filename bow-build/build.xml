@@ -2,9 +2,8 @@
 <!-- ====================================================================== 
      Sep 8, 2012 2:41:20 PM                                                        
 
-     BOW PROJECT    
-     
-                   
+     BOW BUILD PROJECT    
+                        
      Frank Herling, PRODYNA AG                                                                
      ====================================================================== -->
 <project name="BOW PROJECT" default="default">
