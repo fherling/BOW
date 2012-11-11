@@ -8,5 +8,6 @@
 	<modules>
 	 <module>bow-mvn-dummy</module>
 	</modules>
-	
+<name>swa-bow</name>
+  
 </project>
