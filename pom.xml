@@ -3,5 +3,7 @@
   <groupId>SWA-BOW</groupId>
   <artifactId>SWA-BOW</artifactId>
   <version>SNAPSHOT</version>
-	
+	<modules>
+	 <module>bow-mvn-dummy</module>
+	</modules>
 </project>
