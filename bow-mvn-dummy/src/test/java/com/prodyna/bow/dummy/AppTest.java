@@ -36,4 +36,16 @@ public class AppTest
     	System.out.println("test the app");
         assertTrue( true );
     }
+    
+    public void testApp_process(){
+    	App app = new App();
+    	app.process();
+    	assertTrue(true);
+    }
+    
+    public void testApp_process2(){
+    	App app = new App();
+    	app.process();
+    	assertTrue(false);
+    }
 }

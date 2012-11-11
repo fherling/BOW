@@ -10,4 +10,8 @@ public class App
     {
         System.out.println( "Hello World!" );
     }
+    
+    public void process(){
+    	System.out.println("calling process...");
+    }
 }
