@@ -19,9 +19,9 @@ function resetMap() {
 }
 
 function setMapLocation(address) {
-	
+
 	clearMarkers();
-	
+
 	geocoder.geocode({
 		'address' : address
 	}, function(results, status) {
