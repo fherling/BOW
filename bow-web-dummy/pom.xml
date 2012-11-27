@@ -11,6 +11,72 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
+	<build>
+		<finalName>bow</finalName>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.0</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.10</version>
+				<configuration>  <!-- Skip the normal tests, we'll run them in the integration-test phase -->
+					<skip>true</skip>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>test</goal>
+						</goals>
+						<configuration>
+							<skip>false</skip>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.0</version>
+				<executions>
+					<execution>
+						<id>tomcat-run</id>
+						<goals>
+							<goal>run-war-only</goal>
+						</goals>
+						<phase>pre-integration-test</phase>
+						<configuration>
+							<path>/${project.artifactId}</path>
+							<port>8888</port>
+							<hostName>localhost</hostName>
+							<update>true</update>
+							<fork>true</fork>
+						</configuration>
+					</execution>
+					<execution>
+						<id>tomcat-shutdown</id>
+						<goals>
+							<goal>shutdown</goal>
+						</goals>
+						<phase>post-integration-test</phase>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+
 	<profiles>
 		<profile>
 			<id>windows</id>
@@ -21,19 +87,7 @@
 			</activation>
 
 			<build>
-				<finalName>bow</finalName>
-
 				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-compiler-plugin</artifactId>
-						<version>3.0</version>
-						<configuration>
-							<source>1.6</source>
-							<target>1.6</target>
-						</configuration>
-					</plugin>
-
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>selenium-maven-plugin</artifactId>
@@ -61,63 +115,7 @@
 							</execution>
 						</executions>
 					</plugin>
-
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-surefire-plugin</artifactId>
-						<version>2.10</version>
-						<configuration>  <!-- Skip the normal tests, we'll run them in the integration-test phase -->
-							<skip>true</skip>
-						</configuration>
-						<executions>
-							<execution>
-								<phase>integration-test</phase>
-								<goals>
-									<goal>test</goal>
-								</goals>
-								<configuration>
-									<skip>false</skip>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>tomcat-maven-plugin</artifactId>
-						<version>1.1</version>
-						<configuration>
-							<server>bowserver</server>
-							<path>/bow</path>
-							<url>http://localhost:8888</url>
-							<update>true</update>
-							<fork>true</fork>
-						</configuration>
-						<executions>
-							<execution>
-								<id>start-tomcat</id>
-								<phase>pre-integration-test</phase>
-								<goals>
-									<goal>run</goal>
-								</goals>
-								<configuration>
-									<background>true</background>
-								</configuration>
-							</execution>
-							<execution>
-								<id>stop-tomcat</id>
-								<phase>post-integration-test</phase>
-								<goals>
-									<goal>stop</goal>
-								</goals>
-								<configuration>
-									<background>true</background>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
 				</plugins>
-
 			</build>
 		</profile>
 
@@ -130,19 +128,7 @@
 			</activation>
 
 			<build>
-				<finalName>bow</finalName>
-
 				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-compiler-plugin</artifactId>
-						<version>3.0</version>
-						<configuration>
-							<source>1.6</source>
-							<target>1.6</target>
-						</configuration>
-					</plugin>
-
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>selenium-maven-plugin</artifactId>
@@ -152,14 +138,13 @@
 								<id>start-server</id>
 								<phase>pre-integration-test</phase>
 								<goals>
-									<goal>xvfb</goal>
+						<!-- 			<goal>xvfb</goal>   -->
 									<goal>start-server</goal>
 								</goals>
 								<configuration>
 									<background>true</background>
 								</configuration>
 							</execution>
-
 							<execution>
 								<id>stop-server</id>
 								<phase>post-integration-test</phase>
@@ -170,69 +155,11 @@
 									<background>true</background>
 								</configuration>
 							</execution>
-
-						</executions>
-					</plugin>
-
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-surefire-plugin</artifactId>
-						<version>2.10</version>
-						<configuration>  <!-- Skip the normal tests, we'll run them in the integration-test phase -->
-							<skip>true</skip>
-						</configuration>
-						<executions>
-							<execution>
-								<phase>integration-test</phase>
-								<goals>
-									<goal>test</goal>
-								</goals>
-								<configuration>
-									<skip>false</skip>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>tomcat-maven-plugin</artifactId>
-						<version>1.1</version>
-						<configuration>
-							<server>bowserver</server>
-							<path>/bow</path>
-							<url>http://localhost:8888</url>
-							<update>true</update>
-							<fork>true</fork>
-						</configuration>
-						<executions>
-							<execution>
-								<id>start-tomcat</id>
-								<phase>pre-integration-test</phase>
-								<goals>
-									<goal>run</goal>
-								</goals>
-								<configuration>
-									<background>true</background>
-								</configuration>
-							</execution>
-							<execution>
-								<id>stop-tomcat</id>
-								<phase>post-integration-test</phase>
-								<goals>
-									<goal>stop</goal>
-								</goals>
-								<configuration>
-									<background>true</background>
-								</configuration>
-							</execution>
 						</executions>
 					</plugin>
 				</plugins>
-
 			</build>
 		</profile>
-
 	</profiles>
 
 

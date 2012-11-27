@@ -42,7 +42,7 @@ public class Bow57Test {
 
 		driver = new HtmlUnitDriver(BrowserVersion.FIREFOX_3_6);
 		((HtmlUnitDriver) driver).setJavascriptEnabled(false);
-		driver.get("http://localhost:8080/bow/");
+		driver.get("http://localhost:8888/bow/");
 
 		driver.findElement(By.xpath("//h1[@id='heading'][starts-with(.,'This is a static page')]"));
 	}
@@ -53,7 +53,7 @@ public class Bow57Test {
 		driver = new FirefoxDriver();
 		// ((FirefoxDriver) driver).setJavascriptEnabled(true); DEFAULT ON
 		driver.manage().window().maximize();
-		driver.get("http://localhost:8080/bow/");
+		driver.get("http://localhost:8888/bow/");
 
 		new WebDriverWait(driver, 5).until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div#map_canvas")));
 
