@@ -1,12 +1,24 @@
 package com.prodyna.swa.bow;
 
+import java.io.InputStream;
+import java.net.URL;
+import java.util.Properties;
+import java.util.ResourceBundle;
+
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Platform;
+import org.openqa.selenium.Proxy;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -50,8 +62,31 @@ public class Bow57Test {
 	@Test
 	public void JavaScriptOnFirefoxTest() throws Exception {
 
-		driver = new FirefoxDriver();
-		// ((FirefoxDriver) driver).setJavascriptEnabled(true); DEFAULT ON
+		FirefoxProfile fp = new FirefoxProfile();
+		fp.setEnableNativeEvents(true);
+
+		DesiredCapabilities dc = new DesiredCapabilities();
+		dc.setCapability(FirefoxDriver.PROFILE, fp);
+		dc.setBrowserName("firefox");
+		dc.setPlatform(Platform.LINUX);
+		dc.setJavascriptEnabled(true);
+
+		// Proxy proxy = new Proxy();
+		// String PROXY = "localhost:8080";
+		// proxy.setHttpProxy(PROXY).setFtpProxy(PROXY).setSslProxy(PROXY);
+		// proxy.setProxyAutoconfigUrl("http://inetprox.inet.cns.fra.dlh.de/lsy.pac");
+		// dc.setCapability(CapabilityType.PROXY, proxy);
+		// dc.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+
+		final String displayProps = System.getProperty("XdisplayPropertiesBase");
+		Assert.assertEquals("display", displayProps); // display.properties
+
+		ResourceBundle b = ResourceBundle.getBundle(displayProps);
+
+		FirefoxBinary ffox = new FirefoxBinary();
+		ffox.setEnvironmentProperty("DISPLAY", b.getString("display"));
+
+		driver = new FirefoxDriver(ffox, fp, dc);
 		driver.manage().window().maximize();
 		driver.get("http://localhost:8888/bow/");
 

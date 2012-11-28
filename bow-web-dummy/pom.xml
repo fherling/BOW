@@ -9,6 +9,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<displayPropertiesBase>display</displayPropertiesBase>
 	</properties>
 
 	<build>
@@ -31,6 +32,9 @@
 				<version>2.10</version>
 				<configuration>  <!-- Skip the normal tests, we'll run them in the integration-test phase -->
 					<skip>true</skip>
+					<systemPropertyVariables>
+						<XdisplayPropertiesBase>${displayPropertiesBase}</XdisplayPropertiesBase>
+					</systemPropertyVariables>
 				</configuration>
 				<executions>
 					<execution>
