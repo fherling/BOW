@@ -82,7 +82,9 @@ public class Bow57Test {
 		File f = new File(displayProps);
 		System.out.println("CanRead=" + f.canRead());
 		BufferedReader br = new BufferedReader(new FileReader(f));
-		System.out.println("Content:" + br.readLine());
+		String line;
+		while ((line = br.readLine()) != null)
+			System.out.println("Content:" + line);
 		br.close();
 
 		ResourceBundle b = ResourceBundle.getBundle(displayProps);
