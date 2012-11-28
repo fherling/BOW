@@ -1,8 +1,8 @@
 package com.prodyna.swa.bow;
 
-import java.io.InputStream;
-import java.net.URL;
-import java.util.Properties;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.ResourceBundle;
 
 import org.junit.After;
@@ -10,14 +10,12 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Platform;
-import org.openqa.selenium.Proxy;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -29,7 +27,7 @@ public class Bow57Test {
 
 	private WebDriver driver;
 
-	private void wait(long timeOutInSeconds, final String xpath, boolean throwTimeoutException) {
+	void wait(long timeOutInSeconds, final String xpath, boolean throwTimeoutException) {
 		try {
 			new WebDriverWait(driver, timeOutInSeconds).until(new ExpectedCondition<Boolean>() {
 				@Override
@@ -80,6 +78,12 @@ public class Bow57Test {
 
 		final String displayProps = System.getProperty("XdisplayPropertiesBase");
 		Assert.assertEquals("display", displayProps); // display.properties
+
+		File f = new File(displayProps);
+		System.out.println("CanRead=" + f.canRead());
+		BufferedReader br = new BufferedReader(new FileReader(f));
+		System.out.println("Content:" + br.readLine());
+		br.close();
 
 		ResourceBundle b = ResourceBundle.getBundle(displayProps);
 
