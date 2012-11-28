@@ -3,8 +3,6 @@ package com.prodyna.swa.bow;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -43,6 +41,45 @@ public class Bow57Test {
 		}
 	}
 
+	/** Build FirefoxBinary with DISPLAY set */
+	private FirefoxBinary buildFirefoxBinary() {
+
+		final String displayId = "DISPLAY";
+
+		final String displayProps = System.getProperty("webDriverDisplayProps");
+		Assert.assertEquals("target/test-classes/display.properties", displayProps);
+
+		FirefoxBinary ffox = new FirefoxBinary();
+
+		try {
+			File f = new File(displayProps);
+			if (f.canRead()) {
+				// #Xvfb Display Properties
+				// #Wed Nov 28 22:38:29 CET 2012
+				// DISPLAY=\:20
+				// XAUTHORITY=/tmp/Xvfb4648548945587926008.Xauthority
+
+				BufferedReader br = new BufferedReader(new FileReader(f));
+				String line;
+				while ((line = br.readLine()) != null) {
+					System.out.println("Content:" + line);
+					if (line.startsWith(displayId)) {
+						ffox.setEnvironmentProperty(displayId, line.substring(line.indexOf(':')));
+						break;
+					}
+				}
+				br.close();
+
+			} else
+				System.out.println("Cannot find and read file " + f.getAbsolutePath());
+
+		} catch (Exception e) {
+			System.out.println("Cannot find and read file " + displayProps);
+		}
+
+		return ffox;
+	}
+
 	@After
 	public void tearDown() {
 		driver.quit();
@@ -77,36 +114,7 @@ public class Bow57Test {
 		// dc.setCapability(CapabilityType.PROXY, proxy);
 		// dc.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
 
-		final String displayProps = System.getProperty("webDriverDisplayProps");
-		Assert.assertEquals("target/test-classes/display.properties", displayProps);
-
-		try {
-			File f = new File(displayProps);
-			System.out.println("File=" + f.getAbsolutePath() + " CanRead=" + f.canRead());
-			BufferedReader br = new BufferedReader(new FileReader(f));
-			String line;
-			while ((line = br.readLine()) != null)
-				System.out.println("Content:" + line);
-			br.close();
-		} catch (Exception e) {
-			; // ignore
-		}
-
-		// #Xvfb Display Properties
-		// #Wed Nov 28 22:38:29 CET 2012
-		// DISPLAY=\:20
-		// XAUTHORITY=/tmp/Xvfb4648548945587926008.Xauthority
-
-		FirefoxBinary ffox = new FirefoxBinary();
-
-		try {
-			ResourceBundle b = ResourceBundle.getBundle("display");
-			ffox.setEnvironmentProperty("DISPLAY", b.getString("DISPLAY"));
-		} catch (MissingResourceException e) {
-			System.out.println("INFO: display.properties not written by WebDriver, ignoring:\n" + e.getMessage());
-		}
-
-		driver = new FirefoxDriver(ffox, fp, dc);
+		driver = new FirefoxDriver(buildFirefoxBinary(), fp, dc);
 		driver.manage().window().maximize();
 		driver.get("http://localhost:8888/bow/");
 
