@@ -100,7 +100,7 @@ public class Bow57Test {
 		FirefoxBinary ffox = new FirefoxBinary();
 
 		try {
-			ResourceBundle b = ResourceBundle.getBundle(displayProps.replace(".properties", ""));
+			ResourceBundle b = ResourceBundle.getBundle("display");
 			ffox.setEnvironmentProperty("DISPLAY", b.getString("DISPLAY"));
 		} catch (MissingResourceException e) {
 			System.out.println("INFO: display.properties not written by WebDriver, ignoring:\n" + e.getMessage());
