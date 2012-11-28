@@ -3,6 +3,7 @@ package com.prodyna.swa.bow;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import org.junit.After;
@@ -76,21 +77,34 @@ public class Bow57Test {
 		// dc.setCapability(CapabilityType.PROXY, proxy);
 		// dc.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
 
-		final String displayProps = System.getProperty("XdisplayPropertiesBase");
-		Assert.assertEquals("display", displayProps); // display.properties
+		final String displayProps = System.getProperty("webDriverDisplayProps");
+		Assert.assertEquals("display.properties", displayProps); // display.properties
 
-		File f = new File(displayProps);
-		System.out.println("CanRead=" + f.canRead());
-		BufferedReader br = new BufferedReader(new FileReader(f));
-		String line;
-		while ((line = br.readLine()) != null)
-			System.out.println("Content:" + line);
-		br.close();
+		try {
+			File f = new File(displayProps);
+			System.out.println("File=" + displayProps + " CanRead=" + f.canRead());
+			BufferedReader br = new BufferedReader(new FileReader(f));
+			String line;
+			while ((line = br.readLine()) != null)
+				System.out.println("Content:" + line);
+			br.close();
+		} catch (Exception e) {
+			; // ignore
+		}
 
-		ResourceBundle b = ResourceBundle.getBundle(displayProps);
+		// #Xvfb Display Properties
+		// #Wed Nov 28 22:38:29 CET 2012
+		// DISPLAY=\:20
+		// XAUTHORITY=/tmp/Xvfb4648548945587926008.Xauthority
 
 		FirefoxBinary ffox = new FirefoxBinary();
-		ffox.setEnvironmentProperty("DISPLAY", b.getString("display"));
+
+		try {
+			ResourceBundle b = ResourceBundle.getBundle(displayProps.replace(".properties", ""));
+			ffox.setEnvironmentProperty("DISPLAY", b.getString("DISPLAY"));
+		} catch (MissingResourceException e) {
+			System.out.println("INFO: display.properties not written by WebDriver, ignoring:\n" + e.getMessage());
+		}
 
 		driver = new FirefoxDriver(ffox, fp, dc);
 		driver.manage().window().maximize();

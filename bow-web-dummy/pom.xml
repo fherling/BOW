@@ -9,7 +9,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<displayPropertiesBase>display</displayPropertiesBase>
+		<displayPropertiesFile>display.properties</displayPropertiesFile>
 	</properties>
 
 	<build>
@@ -33,7 +33,7 @@
 				<configuration>  <!-- Skip the normal tests, we'll run them in the integration-test phase -->
 					<skip>true</skip>
 					<systemPropertyVariables>
-						<XdisplayPropertiesBase>${displayPropertiesBase}</XdisplayPropertiesBase>
+						<webDriverDisplayProps>${displayPropertiesFile}</webDriverDisplayProps>
 					</systemPropertyVariables>
 				</configuration>
 				<executions>
@@ -147,7 +147,7 @@
 								</goals>
 								<configuration>
 									<background>true</background>
-									<displayPropertiesFile>${displayPropertiesBase}</displayPropertiesFile>
+									<displayPropertiesFile>${displayPropertiesFile}</displayPropertiesFile>
 								</configuration>
 							</execution>
 							<execution>
