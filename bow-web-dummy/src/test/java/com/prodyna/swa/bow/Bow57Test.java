@@ -82,7 +82,7 @@ public class Bow57Test {
 
 		try {
 			File f = new File(displayProps);
-			System.out.println("File=" + displayProps + " CanRead=" + f.canRead());
+			System.out.println("File=" + f.getAbsolutePath() + " CanRead=" + f.canRead());
 			BufferedReader br = new BufferedReader(new FileReader(f));
 			String line;
 			while ((line = br.readLine()) != null)
