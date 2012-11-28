@@ -78,7 +78,7 @@ public class Bow57Test {
 		// dc.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
 
 		final String displayProps = System.getProperty("webDriverDisplayProps");
-		Assert.assertEquals("display.properties", displayProps); // display.properties
+		Assert.assertEquals("target/test-classes/display.properties", displayProps);
 
 		try {
 			File f = new File(displayProps);
