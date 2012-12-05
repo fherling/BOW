@@ -65,7 +65,6 @@ public class Bow57Test {
 					System.out.println("Content:" + line);
 					if (line.startsWith(displayId)) {
 						ffox.setEnvironmentProperty(displayId, line.substring(line.indexOf(':')));
-						break;
 					}
 				}
 				br.close();
@@ -114,9 +113,13 @@ public class Bow57Test {
 		// dc.setCapability(CapabilityType.PROXY, proxy);
 		// dc.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
 
+		System.out.println("####### Going launch FF");
 		driver = new FirefoxDriver(buildFirefoxBinary(), fp, dc);
+		System.out.println("####### Maximize FF");
 		driver.manage().window().maximize();
-		driver.get("http://localhost:8888/bow/");
+		System.out.println("####### Do GET request");
+//		driver.get("http://localhost:8888/bow/");
+		driver.get("http://www.google.com");
 
 		new WebDriverWait(driver, 5).until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div#map_canvas")));
 
