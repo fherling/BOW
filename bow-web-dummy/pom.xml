@@ -149,9 +149,7 @@
 									<background>true</background>
 									<displayPropertiesFile>${displayPropertiesFile}</displayPropertiesFile>
 									<options>
-										<option>-ac</option>
-										<option>-screen 0 640x480x24</option>
-										<option>-fbdir /var/tmp</option>
+										<option>-ac -screen 0 640x480x24 -fbdir /var/tmp</option>
 									</options>
 								</configuration>
 							</execution>
