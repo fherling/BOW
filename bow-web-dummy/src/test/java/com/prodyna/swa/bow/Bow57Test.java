@@ -64,8 +64,7 @@ public class Bow57Test {
 				while ((line = br.readLine()) != null) {
 					System.out.println("Content:" + line);
 					if (line.startsWith(displayId)) {
-//						ffox.setEnvironmentProperty(displayId, line.substring(line.indexOf(':')));
-						ffox.setEnvironmentProperty(displayId, ":20");
+						ffox.setEnvironmentProperty(displayId, line.substring(line.indexOf(':')));
 					}
 				}
 				br.close();
